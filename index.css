@@ -5,7 +5,7 @@
 }
 
 .first_row,
-.fsecond_row,
+.second_row,
 .third_row {
 display: flex;
 }

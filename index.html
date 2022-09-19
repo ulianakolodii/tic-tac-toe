@@ -1,40 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Let's play!</title>
-    <link rel="stylesheet" type="text/css" href="index.css" />
-  </head>
 
-  <body>
-    <div class="game_container">
-      <div class="title_container"><p>Tic Tac Toe game</p></div>
-      <div class="mode_container">
-        <button>Player vs Computer</button>
-        <button>Friends battle</button>
-        <button>Machines battle</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Let's play!</title>
+  <link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+
+<body>
+  <div class="game_container">
+    <div class="title_container">
+      <p>Tic Tac Toe game</p>
+    </div>
+    <div id="mode_container">
+      <button id="PC_button">Player vs Computer</button>
+      <button id="FB_button">Friends battle</button>
+      <button id="MB_button">Machines battle</button>
+    </div>
+    <div id="PC_field-container">
+      <div class="first_row">
+        <div id="box-1" class="PC_field-box"></div>
+        <div id="box-2" class="PC_field-box"></div>
+        <div id="box-3" class="PC_field-box"></div>
       </div>
-      <div class="FB_field-container">
-        <div class="first_row">
-          <div id="box-1" class="field_box"></div>
-          <div id="box-2" class="field_box"></div>
-          <div id="box-3" class="field_box"></div>
-        </div>
-        <div class="second_row">
-          <div id="box-4" class="field_box"></div>
-          <div id="box-5" class="field_box"></div>
-          <div id="box-6" class="field_box"></div>
-        </div>
-        <div class="third_row">
-          <div id="box-7" class="field_box"></div>
-          <div id="box-8" class="field_box"></div>
-          <div id="box-9" class="field_box"></div>
-        </div>
-        <div id="winner_box"></div>
+      <div class="second_row">
+        <div id="box-4" class="PC_field-box"></div>
+        <div id="box-5" class="PC_field-box"></div>
+        <div id="box-6" class="PC_field-box"></div>
+      </div>
+      <div class="third_row">
+        <div id="box-7" class="PC_field-box"></div>
+        <div id="box-8" class="PC_field-box"></div>
+        <div id="box-9" class="PC_field-box"></div>
       </div>
     </div>
-  </body>
-  <script src="index.js"></script>
+    <div id="FB_field-container">
+      <div class="first_row">
+        <div id="box-1" class="FB_field-box"></div>
+        <div id="box-2" class="FB_field-box"></div>
+        <div id="box-3" class="FB_field-box"></div>
+      </div>
+      <div class="second_row">
+        <div id="box-4" class="FB_field-box"></div>
+        <div id="box-5" class="FB_field-box"></div>
+        <div id="box-6" class="FB_field-box"></div>
+      </div>
+      <div class="third_row">
+        <div id="box-7" class="FB_field-box"></div>
+        <div id="box-8" class="FB_field-box"></div>
+        <div id="box-9" class="FB_field-box"></div>
+      </div>
+    </div>
+    <div id="MB_field-container">
+      <div class="first_row">
+        <div id="box-1" class="MB_field-box"></div>
+        <div id="box-2" class="MB_field-box"></div>
+        <div id="box-3" class="MB_field-box"></div>
+      </div>
+      <div class="second_row">
+        <div id="box-4" class="MB_field-box"></div>
+        <div id="box-5" class="MB_field-box"></div>
+        <div id="box-6" class="MB_field-box"></div>
+      </div>
+      <div class="third_row">
+        <div id="box-7" class="MB_field-box"></div>
+        <div id="box-8" class="MB_field-box"></div>
+        <div id="box-9" class="MB_field-box"></div>
+      </div>
+    </div>
+    <div id="winner_box"></div>
+  </div>
+  </div>
+</body>
+<script src="index.js"></script>
+
 </html>

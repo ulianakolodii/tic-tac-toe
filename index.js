@@ -3,13 +3,14 @@
 // 	return ["X", "O"][randomNumber];
 //   };
 
-let BoxesEl = document.querySelectorAll(".field_box");
+let boxesEl = document.querySelectorAll(".field_box");
+let winnerBoxEl = document.getElementById("winner_box");
 
 function magicCheck() {
   let arr = [
-    Array.from(BoxesEl).slice(0, 3),
-    Array.from(BoxesEl).slice(3, 6),
-    Array.from(BoxesEl).slice(6, 9),
+    Array.from(boxesEl).slice(0, 3),
+    Array.from(boxesEl).slice(3, 6),
+    Array.from(boxesEl).slice(6, 9),
   ];
   if (
     arr[0][0].innerText === "X" &&
@@ -127,18 +128,39 @@ function magicCheck() {
   }
 }
 
-function playerChoice(BoxesEl) {
-  let i = 0;
-  for (let box of BoxesEl) {
-    box.addEventListener(
-      "click",
-      function () {
-        box.innerText = ["X", "O"][i % 2];
-        i++;
-      },
-      { once: true }
-    );
+let i = 0;
+let initial = 'X';
+function boxClick(event) {
+  event.target.innerText = initial;
+  initial = initial === 'X' ? 'O': 'X';
+  const result = magicCheck();
+  if (result !== false) {
+    winnerBoxEl.innerHTML = `The winner is ${result}.`;
+    removeEventListeners(boxesEl);
   }
 }
 
-playerChoice(BoxesEl);
+function removeEventListeners(boxesEl) {
+  Array.from(boxesEl).forEach(
+    box => box.removeEventListener('click', boxClick, { once: true })
+  )
+}
+
+function addEventListeners(boxesEl) {
+  Array.from(boxesEl).forEach(
+    box => box.addEventListener('click', boxClick, { once: true })
+  )
+}
+addEventListeners(boxesEl);
+
+
+function playGame () {
+  if (magicCheck() = false) {
+    playerChoice(boxesEl)
+  }
+  else {
+    return magicCheck();
+  }
+}
+
+

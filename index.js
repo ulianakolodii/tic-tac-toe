@@ -8,6 +8,7 @@ const PCFieldEl = document.getElementById("PC_field-container");
 const FBButtonEl = document.getElementById("FB_button");
 const FBFieldEl = document.getElementById("FB_field-container");
 const MBButtonEl = document.getElementById("MB_button");
+const startMBGameBtnEl = document.getElementById("btn_startMBGame");
 const MBFieldEl = document.getElementById("MB_field-container");
 const modeButtonEl = document.getElementById("mode_button");
 modeButtonEl.style.display = "none";
@@ -195,39 +196,97 @@ function FBRemoveEventListeners(FBBoxesEl) {
 }
 
 function FBAddEventListeners(FBBoxesEl) {
-  console.log("hello", Array.from(FBBoxesEl));
   Array.from(FBBoxesEl).forEach((box) =>
     box.addEventListener("click", FBBoxClick, { once: true })
   );
 }
 FBAddEventListeners(FBBoxesEl);
 
-const generateRandomChoice = () => {
-  const randomNumber = Math.floor(Math.random() * 2);
-  return ["X", "O"][randomNumber];
+let randomIndexArr = [];
+let randomIndex = 0;
+let randomBoxes = [];
+
+const generateRandomIndex = () => {
+  randomIndexArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  let i = 0;
+  for (i = 0; i < randomIndexArr.length + 1; i++) {
+    console.log("randomIndexArr", randomIndexArr);
+    randomIndex = Math.floor(Math.random() * randomIndexArr.length + 1);
+  }
+  let deletedInd = randomIndexArr.splice(
+    randomIndexArr.indexOf(randomIndex),
+    1
+  );
+  console.log("deletedInd", deletedInd);
+  return randomIndex;
 };
 
-function MBBoxClick(event) {
-  event.target.innerText = generateRandomChoice();
-  const result = magicCheck(MBBoxesEl);
-  if (result !== false) {
-    winnerBoxEl.innerHTML = `The winner is ${result}.`;
-    MBRemoveEventListeners(MBBoxesEl);
+const getBoxesState = (selector = ".MB_field-box") =>
+  Array.from(document.querySelectorAll(selector));
+
+const getAvailableBoxes = () =>
+  getBoxesState().filter((el) => el.innerText === "");
+
+const getRandomNumberTo = (to = 5) => Math.floor(Math.random() * to + 1) - 1;
+
+function MBBoxClick() {
+  const availableBoxes = getAvailableBoxes();
+  if (availableBoxes.length < 1) {
+    return;
   }
+  const randomNumber = getRandomNumberTo(availableBoxes.length - 1);
+  const randomBox = availableBoxes[randomNumber];
+  randomBox.innerText = initial;
+  initial = initial === "X" ? "O" : "X";
+  console.log(getAvailableBoxes());
+  setTimeout(() => {
+    MBBoxClick();
+  }, 500);
+  // console.log(
+  //   getAvailableBoxes(),
+  //   getRandomNumberTo(),
+  //   getRandomNumberTo(),
+  //   getRandomNumberTo(),
+  //   getRandomNumberTo(),
+  //   getRandomNumberTo(),
+  //   getRandomNumberTo()
+  // );
+  // randomBoxes = [0,1,2,3,4,5,6,7,8];
+  // let i = 0;
+  // for (i = 0; i < randomBoxes.length + 1; i++) {
+  //   console.log('randomBoxes', randomBoxes);
+  //   generateRandomIndex();
+  // console.log('randomIndex', randomIndex);
+  // let boxChoice = randomBoxes.splice(randomIndex, 1);
+  // console.log('boxChoice', boxChoice);
+  // let randomBox = document.getElementById(`MBBox-${boxChoice}`);
+  // console.log('randomBox', randomBox);
+  // if (randomBox.innerText == "") {
+  //   randomBox.innerText = initial;
+  //   initial = initial === "X" ? "O" : "X";
+  // } else {
+  //   const result = magicCheck(MBBoxesEl);
+  //   if (result !== false) {
+  //     winnerBoxEl.innerHTML = `The winner is ${result}.`;
+  //     MBRemoveEventListeners(MBBoxesEl);
+  //   }
+  // }}
 }
 
-function MBRemoveEventListeners(MBBoxesEl) {
-  Array.from(MBBoxesEl).forEach((box) =>
-    box.removeEventListener("click", MBBoxClick, { once: true })
-  );
+let randomChoicessssssss = 0;
+const generateRandomChoice = () => {
+  randomNumber = Math.floor(Math.random() * 9);
+  return randomNumber;
+};
+
+function MBRemoveEventListeners() {
+  startMBGameBtnEl.removeEventListener("click", MBBoxClick, { once: true });
 }
 
-function MBAddEventListeners(MBBoxesEl) {
-  Array.from(MBBoxesEl).forEach((box) =>
-    box.addEventListener("click", MBBoxClick, { once: true })
-  );
+function MBAddEventListeners() {
+  startMBGameBtnEl.addEventListener("click", MBBoxClick, { once: true });
 }
-MBAddEventListeners(MBBoxesEl);
+MBAddEventListeners();
 
 function PCBoxClick(event) {
   event.target.innerText = initial;

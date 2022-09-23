@@ -18,6 +18,7 @@ MBFieldEl.style.display = "none";
 Array.from(FBBoxesEl).forEach((el) => (el.innerText = ""));
 Array.from(MBBoxesEl).forEach((el) => (el.innerText = ""));
 Array.from(PCBoxesEl).forEach((el) => (el.innerText = ""));
+let initial = "X";
 
 function showFBMode() {
   FBFieldEl.style.display = "flex";
@@ -25,6 +26,7 @@ function showFBMode() {
   MBFieldEl.style.display = "none";
   modeFieldEL.style.display = "none";
   modeButtonEl.style.display = "flex";
+  FBAddEventListeners(FBBoxesEl);
 }
 
 FBButtonEl.addEventListener("click", () => {
@@ -37,6 +39,7 @@ function showMBMode() {
   MBFieldEl.style.display = "flex";
   modeFieldEL.style.display = "none";
   modeButtonEl.style.display = "flex";
+  // MBAddEventListeners(MBBoxesEl);
 }
 
 MBButtonEl.addEventListener("click", () => {
@@ -49,6 +52,7 @@ function showPCMode() {
   MBFieldEl.style.display = "none";
   modeFieldEL.style.display = "none";
   modeButtonEl.style.display = "flex";
+  PCAddEventListeners(PCBoxesEl);
 }
 
 PCButtonEl.addEventListener("click", () => {
@@ -178,7 +182,6 @@ function magicCheck(boxes) {
 }
 
 let i = 0;
-let initial = "X";
 function FBBoxClick(event) {
   event.target.innerText = initial;
   initial = initial === "X" ? "O" : "X";
@@ -230,58 +233,29 @@ const getAvailableBoxes = () =>
 const getRandomNumberTo = (to = 5) => Math.floor(Math.random() * to + 1) - 1;
 
 function MBBoxClick() {
-  const availableBoxes = getAvailableBoxes();
-  if (availableBoxes.length < 1) {
-    return;
+  const result = magicCheck(MBBoxesEl);
+  if (result !== false) {
+    winnerBoxEl.innerHTML = `The winner is ${result}.`;
+    // MBRemoveEventListeners()
+  } else {
+    const availableBoxes = getAvailableBoxes();
+    if (availableBoxes.length < 1) {
+      return;
+    }
+    const randomNumber = getRandomNumberTo(availableBoxes.length - 1);
+    const randomBox = availableBoxes[randomNumber];
+    randomBox.innerText = initial;
+    initial = initial === "X" ? "O" : "X";
   }
-  const randomNumber = getRandomNumberTo(availableBoxes.length - 1);
-  const randomBox = availableBoxes[randomNumber];
-  randomBox.innerText = initial;
-  initial = initial === "X" ? "O" : "X";
-  console.log(getAvailableBoxes());
   setTimeout(() => {
     MBBoxClick();
-  }, 500);
-  // console.log(
-  //   getAvailableBoxes(),
-  //   getRandomNumberTo(),
-  //   getRandomNumberTo(),
-  //   getRandomNumberTo(),
-  //   getRandomNumberTo(),
-  //   getRandomNumberTo(),
-  //   getRandomNumberTo()
-  // );
-  // randomBoxes = [0,1,2,3,4,5,6,7,8];
-  // let i = 0;
-  // for (i = 0; i < randomBoxes.length + 1; i++) {
-  //   console.log('randomBoxes', randomBoxes);
-  //   generateRandomIndex();
-  // console.log('randomIndex', randomIndex);
-  // let boxChoice = randomBoxes.splice(randomIndex, 1);
-  // console.log('boxChoice', boxChoice);
-  // let randomBox = document.getElementById(`MBBox-${boxChoice}`);
-  // console.log('randomBox', randomBox);
-  // if (randomBox.innerText == "") {
-  //   randomBox.innerText = initial;
-  //   initial = initial === "X" ? "O" : "X";
-  // } else {
-  //   const result = magicCheck(MBBoxesEl);
-  //   if (result !== false) {
-  //     winnerBoxEl.innerHTML = `The winner is ${result}.`;
-  //     MBRemoveEventListeners(MBBoxesEl);
-  //   }
-  // }}
-}
+      }, 500);
+    }
 
-let randomChoicessssssss = 0;
-const generateRandomChoice = () => {
-  randomNumber = Math.floor(Math.random() * 9);
-  return randomNumber;
-};
 
-function MBRemoveEventListeners() {
-  startMBGameBtnEl.removeEventListener("click", MBBoxClick, { once: true });
-}
+// function MBRemoveEventListeners() {
+//   startMBGameBtnEl.removeEventListener("click", MBBoxClick, { once: true });
+// }
 
 function MBAddEventListeners() {
   startMBGameBtnEl.addEventListener("click", MBBoxClick, { once: true });
@@ -311,19 +285,18 @@ function PCAddEventListeners(PCBoxesEl) {
 }
 PCAddEventListeners(PCBoxesEl);
 
+//Запускає MBBoxClick і setTimeout!!! чому??
 function showModeField() {
   FBFieldEl.style.display = "none";
   PCFieldEl.style.display = "none";
-  MBFieldEl.style.display = "none";
+  MBFieldEl.style.display = "flex";
   modeFieldEL.style.display = "flex";
   modeButtonEl.style.display = "none";
   winnerBoxEl.innerText = "";
   Array.from(FBBoxesEl).forEach((el) => (el.innerText = ""));
   Array.from(MBBoxesEl).forEach((el) => (el.innerText = ""));
   Array.from(PCBoxesEl).forEach((el) => (el.innerText = ""));
-  PCAddEventListeners(PCBoxesEl);
-  FBAddEventListeners(FBBoxesEl);
-  MBAddEventListeners(MBBoxesEl);
+  initial = "X";
 }
 
 modeButtonEl.addEventListener("click", () => {

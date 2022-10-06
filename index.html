@@ -1,80 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reset.css" />
+    <script defer src="index.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="header">
+      <button id="computerVsComputer">Computer VS Computer</button>
+      <button id="playerVsComputer">Player VS Computer</button>
+      <button id="playerVsPlayer">Player VS Player</button>
+    </div>
+    <div class="content">
+      <div class="grid">
+        <div data-row="0" data-column="0" class="box"></div>
+        <div data-row="0" data-column="1" class="box"></div>
+        <div data-row="0" data-column="2" class="box"></div>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Let's play!</title>
-  <link rel="stylesheet" type="text/css" href="index.css" />
-</head>
+        <div data-row="1" data-column="0" class="box"></div>
+        <div data-row="1" data-column="1" class="box"></div>
+        <div data-row="1" data-column="2" class="box"></div>
 
-<body>
-  <div class="game_container">
-    <div class="title_container">
-      <p>Tic Tac Toe game</p>
+        <div data-row="2" data-column="0" class="box"></div>
+        <div data-row="2" data-column="1" class="box"></div>
+        <div data-row="2" data-column="2" class="box"></div>
+      </div>
+      <div id="winner_box"></div>
     </div>
-    <button id="mode_button">Select mode</button>
-    <div id="mode_container">
-      <button id="PC_button">Player vs Computer</button>
-      <button id="FB_button">Friends battle</button>
-      <button id="MB_button">Machines battle</button>
-    </div>
-    <div id="PC_field-container">
-      <div class="first_row">
-        <div id="box-1" class="PC_field-box"></div>
-        <div id="box-2" class="PC_field-box"></div>
-        <div id="box-3" class="PC_field-box"></div>
-      </div>
-      <div class="second_row">
-        <div id="box-4" class="PC_field-box"></div>
-        <div id="box-5" class="PC_field-box"></div>
-        <div id="box-6" class="PC_field-box"></div>
-      </div>
-      <div class="third_row">
-        <div id="box-7" class="PC_field-box"></div>
-        <div id="box-8" class="PC_field-box"></div>
-        <div id="box-9" class="PC_field-box"></div>
-      </div>
-    </div>
-    <div id="FB_field-container">
-      <div class="first_row">
-        <div id="box-1" class="FB_field-box"></div>
-        <div id="box-2" class="FB_field-box"></div>
-        <div id="box-3" class="FB_field-box"></div>
-      </div>
-      <div class="second_row">
-        <div id="box-4" class="FB_field-box"></div>
-        <div id="box-5" class="FB_field-box"></div>
-        <div id="box-6" class="FB_field-box"></div>
-      </div>
-      <div class="third_row">
-        <div id="box-7" class="FB_field-box"></div>
-        <div id="box-8" class="FB_field-box"></div>
-        <div id="box-9" class="FB_field-box"></div>
-      </div>
-    </div>
-    <div id="MB_field-container">
-      <button id="btn_startMBGame">Start the game</button>
-      <div class="first_row">
-        <div id="MBBox-0" class="MB_field-box"></div>
-        <div id="MBBox-1" class="MB_field-box"></div>
-        <div id="MBBox-2" class="MB_field-box"></div>
-      </div>
-      <div class="second_row">
-        <div id="MBBox-3" class="MB_field-box"></div>
-        <div id="MBBox-4" class="MB_field-box"></div>
-        <div id="MBBox-5" class="MB_field-box"></div>
-      </div>
-      <div class="third_row">
-        <div id="MBBox-6" class="MB_field-box"></div>
-        <div id="MBBox-7" class="MB_field-box"></div>
-        <div id="MBBox-8" class="MB_field-box"></div>
-      </div>
-    </div>
-    <div id="winner_box"></div>
-  </div>
-  </div>
-</body>
-<script src="index.js"></script>
+  </body>
 </html>

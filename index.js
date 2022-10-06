@@ -1,304 +1,203 @@
-const FBBoxesEl = document.querySelectorAll(".FB_field-box");
-const MBBoxesEl = document.querySelectorAll(".MB_field-box");
-const PCBoxesEl = document.querySelectorAll(".PC_field-box");
-let winnerBoxEl = document.getElementById("winner_box");
-const modeFieldEL = document.getElementById("mode_container");
-const PCButtonEl = document.getElementById("PC_button");
-const PCFieldEl = document.getElementById("PC_field-container");
-const FBButtonEl = document.getElementById("FB_button");
-const FBFieldEl = document.getElementById("FB_field-container");
-const MBButtonEl = document.getElementById("MB_button");
-const startMBGameBtnEl = document.getElementById("btn_startMBGame");
-const MBFieldEl = document.getElementById("MB_field-container");
-const modeButtonEl = document.getElementById("mode_button");
-modeButtonEl.style.display = "none";
-FBFieldEl.style.display = "none";
-PCFieldEl.style.display = "none";
-MBFieldEl.style.display = "none";
-Array.from(FBBoxesEl).forEach((el) => (el.innerText = ""));
-Array.from(MBBoxesEl).forEach((el) => (el.innerText = ""));
-Array.from(PCBoxesEl).forEach((el) => (el.innerText = ""));
-let initial = "X";
-
-function showFBMode() {
-  FBFieldEl.style.display = "flex";
-  PCFieldEl.style.display = "none";
-  MBFieldEl.style.display = "none";
-  modeFieldEL.style.display = "none";
-  modeButtonEl.style.display = "flex";
-  FBAddEventListeners(FBBoxesEl);
-}
-
-FBButtonEl.addEventListener("click", () => {
-  showFBMode();
-});
-
-function showMBMode() {
-  FBFieldEl.style.display = "none";
-  PCFieldEl.style.display = "none";
-  MBFieldEl.style.display = "flex";
-  modeFieldEL.style.display = "none";
-  modeButtonEl.style.display = "flex";
-  // MBAddEventListeners(MBBoxesEl);
-}
-
-MBButtonEl.addEventListener("click", () => {
-  showMBMode();
-});
-
-function showPCMode() {
-  FBFieldEl.style.display = "none";
-  PCFieldEl.style.display = "flex";
-  MBFieldEl.style.display = "none";
-  modeFieldEL.style.display = "none";
-  modeButtonEl.style.display = "flex";
-  PCAddEventListeners(PCBoxesEl);
-}
-
-PCButtonEl.addEventListener("click", () => {
-  showPCMode();
-});
-
-function magicCheck(boxes) {
-  let arr = [
-    Array.from(boxes).slice(0, 3),
-    Array.from(boxes).slice(3, 6),
-    Array.from(boxes).slice(6, 9),
-  ];
-  if (
-    arr[0][0].innerText === "X" &&
-    arr[0][1].innerText === "X" &&
-    arr[0][2].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[1][0].innerText === "X" &&
-    arr[1][1].innerText === "X" &&
-    arr[1][2].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[2][0].innerText === "X" &&
-    arr[2][1].innerText === "X" &&
-    arr[2][2].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[0][0].innerText === "X" &&
-    arr[1][0].innerText === "X" &&
-    arr[2][0].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[0][1].innerText === "X" &&
-    arr[1][1].innerText === "X" &&
-    arr[2][1].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[0][2].innerText === "X" &&
-    arr[1][2].innerText === "X" &&
-    arr[2][2].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[0][0].innerText === "X" &&
-    arr[1][1].innerText === "X" &&
-    arr[2][2].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[0][2].innerText === "X" &&
-    arr[1][1].innerText === "X" &&
-    arr[2][0].innerText === "X"
-  ) {
-    return "X";
-  }
-  if (
-    arr[0][0].innerText === "O" &&
-    arr[0][1].innerText === "O" &&
-    arr[0][2].innerText === "O"
-  ) {
-    return "O";
-  }
-  if (
-    arr[1][0].innerText === "O" &&
-    arr[1][1].innerText === "O" &&
-    arr[1][2].innerText === "O"
-  ) {
-    return "O";
-  }
-  if (
-    arr[2][0].innerText === "O" &&
-    arr[2][1].innerText === "O" &&
-    arr[2][2].innerText === "O"
-  ) {
-    return "O";
-  }
-  if (
-    arr[0][0].innerText === "O" &&
-    arr[1][0].innerText === "O" &&
-    arr[2][0].innerText === "O"
-  ) {
-    return "O";
-  }
-  if (
-    arr[0][1].innerText === "O" &&
-    arr[1][1].innerText === "O" &&
-    arr[2][1].innerText === "O"
-  ) {
-    return "O";
-  }
-  if (
-    arr[0][2].innerText === "O" &&
-    arr[1][2].innerText === "O" &&
-    arr[2][2].innerText === "O"
-  ) {
-    return "O";
-  }
-  if (
-    arr[0][0].innerText === "O" &&
-    arr[1][1].innerText === "O" &&
-    arr[2][2].innerText === "O"
-  ) {
-    return "O";
-  }
-  if (
-    arr[0][2].innerText === "O" &&
-    arr[1][1].innerText === "O" &&
-    arr[2][0].innerText === "O"
-  ) {
-    return "O";
-  } else {
-    return false;
-  }
-}
-
-let i = 0;
-function FBBoxClick(event) {
-  event.target.innerText = initial;
-  initial = initial === "X" ? "O" : "X";
-  const result = magicCheck(FBBoxesEl);
-  if (result !== false) {
-    winnerBoxEl.innerHTML = `The winner is ${result}.`;
-    FBRemoveEventListeners(FBBoxesEl);
-  }
-}
-
-function FBRemoveEventListeners(FBBoxesEl) {
-  Array.from(FBBoxesEl).forEach((box) =>
-    box.removeEventListener("click", FBBoxClick, { once: true })
-  );
-}
-
-function FBAddEventListeners(FBBoxesEl) {
-  Array.from(FBBoxesEl).forEach((box) =>
-    box.addEventListener("click", FBBoxClick, { once: true })
-  );
-}
-FBAddEventListeners(FBBoxesEl);
-
-let randomIndexArr = [];
-let randomIndex = 0;
-let randomBoxes = [];
-
-const generateRandomIndex = () => {
-  randomIndexArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-  let i = 0;
-  for (i = 0; i < randomIndexArr.length + 1; i++) {
-    console.log("randomIndexArr", randomIndexArr);
-    randomIndex = Math.floor(Math.random() * randomIndexArr.length + 1);
-  }
-  let deletedInd = randomIndexArr.splice(
-    randomIndexArr.indexOf(randomIndex),
-    1
-  );
-  console.log("deletedInd", deletedInd);
-  return randomIndex;
+const state = {
+  value: [
+    [undefined, undefined, undefined],
+    [undefined, undefined, undefined],
+    [undefined, undefined, undefined],
+  ],
+  mode: "cc",
 };
 
-const getBoxesState = (selector = ".MB_field-box") =>
-  Array.from(document.querySelectorAll(selector));
+const setState = (row, column, value) => {
+  state.value[row][column] = value;
+};
 
+// const getAvailableBoxes = () => state.value.filter((box) => box === undefined);
 const getAvailableBoxes = () =>
-  getBoxesState().filter((el) => el.innerText === "");
-
+  state.value
+    .flat()
+    .map((value, index) => ({ value, index }))
+    .filter(({ value }) => value === undefined);
 const getRandomNumberTo = (to = 5) => Math.floor(Math.random() * to + 1) - 1;
 
-function MBBoxClick() {
-  const result = magicCheck(MBBoxesEl);
-  if (result !== false) {
-    winnerBoxEl.innerHTML = `The winner is ${result}.`;
-    // MBRemoveEventListeners()
-  } else {
-    const availableBoxes = getAvailableBoxes();
-    if (availableBoxes.length < 1) {
-      return;
+const matchDiagonalLeft = (arr, value = "X") => {
+  return arr[0][0] === value && arr[1][1] === value && arr[2][2] === value;
+};
+
+const matchDiagonalRight = (arr, value = "X") => {
+  return arr[0][2] === value && arr[1][1] === value && arr[2][0] === value;
+};
+
+const matchVertical = (arr, column, value = "X") => {
+  for (let row = 0; row < 3; row++) {
+    if (arr[row][column] !== value) {
+      return false;
     }
-    const randomNumber = getRandomNumberTo(availableBoxes.length - 1);
-    const randomBox = availableBoxes[randomNumber];
-    randomBox.innerText = initial;
+  }
+  return true;
+};
+
+const matchHorizontal = (arr, row, value = "X") =>
+  arr[row].every((el) => el === value);
+
+const isWinner = (arr, value) =>
+  matchHorizontal(arr, 0, value) ||
+  matchHorizontal(arr, 1, value) ||
+  matchHorizontal(arr, 2, value) ||
+  matchVertical(arr, 0, value) ||
+  matchVertical(arr, 1, value) ||
+  matchVertical(arr, 2, value) ||
+  matchDiagonalLeft(arr, value) ||
+  matchDiagonalRight(arr, value);
+
+const whoWinner = () => {
+  const available = getAvailableBoxes();
+  if (available.length > 4) {
+    return false;
+  }
+  if (isWinner(state.value, "X")) {
+    return "X";
+  }
+  if (isWinner(state.value, "O")) {
+    return "O";
+  }
+  return false;
+};
+
+const indexToCordinates = (index) => ({
+  row: Math.floor(index / 3),
+  column: index % 3,
+});
+
+const render = () => {
+  const flatState = state.value.flat();
+  Array.from(document.querySelectorAll(".box")).forEach((box, index) => {
+    if (flatState[index]) {
+      box.innerText = flatState[index];
+    }
+  });
+};
+
+const isComputerVsComputer = () => state.mode === "cc";
+const isPlayerVsComputer = () => state.mode === "pc";
+const isPlayerVsPlayer = () => state.mode = "pp";
+
+const clearAll = () => {
+  state.value = [
+      [undefined, undefined, undefined],
+      [undefined, undefined, undefined],
+      [undefined, undefined, undefined],
+    ];
+    Array.from(document.querySelectorAll(".box")).forEach((box) => {
+      box.innerText = ""});
+      winnerBoxEl.innerText = "";
+}
+
+computerVsComputer.addEventListener("click", () => {
+  state.mode = "cc";
+  clearAll();
+});
+
+playerVsComputer.addEventListener("click", () => {
+  state.mode = "pc";
+  addListeners();
+  clearAll();
+});
+
+playerVsPlayer.addEventListener("click", () => {
+  state.mode = "pp";
+  addListeners();
+  clearAll();
+});
+
+const winnerBoxEl = document.getElementById("winner_box");
+let initial = "X";
+
+
+const handlerPlayerVsComputer = (event) => {
+  const { row, column } = event.target.dataset;
+  if (state.value[row][column] === undefined) {
+    state.value[row][column] = "X";
+    const available = getAvailableBoxes();
+    const randomIndex = getRandomNumberTo(available.length - 1);
+    if (randomIndex >= 0) {
+      const { index: randomAvailableIndex } = available[randomIndex];
+      const { row: randomRow, column: randomColumn } =
+        indexToCordinates(randomAvailableIndex);
+      state.value[randomRow][randomColumn] = "O";
+    }
+    render();
+    const winner = whoWinner();
+    if (winner) {
+      winnerBoxEl.innerText = `The winner is ${winner}`;
+      removeListeners();
+    }
+  }
+};
+
+const handlerPlayerVsPlayer = (event) => {
+  const { row, column } = event.target.dataset;
+  if (state.value[row][column] === undefined) {
+    state.value[row][column] = initial;
     initial = initial === "X" ? "O" : "X";
   }
-  setTimeout(() => {
-    MBBoxClick();
-      }, 500);
-    }
-
-
-// function MBRemoveEventListeners() {
-//   startMBGameBtnEl.removeEventListener("click", MBBoxClick, { once: true });
-// }
-
-function MBAddEventListeners() {
-  startMBGameBtnEl.addEventListener("click", MBBoxClick, { once: true });
-}
-MBAddEventListeners();
-
-function PCBoxClick(event) {
-  event.target.innerText = initial;
-  initial = initial === "X" ? "O" : "X";
-  const result = magicCheck(PCBoxesEl);
-  if (result !== false) {
-    winnerBoxEl.innerHTML = `The winner is ${result}.`;
-    PCRemoveEventListeners(PCBoxesEl);
+  render();
+  const winner = whoWinner();
+  if (winner) {
+    winnerBoxEl.innerText = `The winner is ${winner}`;
+    removeListeners();
   }
-}
+};
 
-function PCRemoveEventListeners(PCBoxesEl) {
-  Array.from(PCBoxesEl).forEach((box) =>
-    box.removeEventListener("click", PCBoxClick, { once: true })
-  );
-}
+const addListeners = () => {
+  if (isComputerVsComputer()) {
+    return;
+  }
+  const handler =
+    state.mode === "pc" ? handlerPlayerVsComputer : handlerPlayerVsPlayer;
+  Array.from(document.querySelectorAll(".box")).forEach((box) => {
+    box.addEventListener("click", handler, { once: true });
+  });
+};
 
-function PCAddEventListeners(PCBoxesEl) {
-  Array.from(PCBoxesEl).forEach((box) =>
-    box.addEventListener("click", PCBoxClick, { once: true })
-  );
-}
-PCAddEventListeners(PCBoxesEl);
+const removeListeners = () => {
+  Array.from(document.querySelectorAll(".box")).forEach((box) => {
+    box.removeEventListener("click", handlerPlayerVsComputer, { once: true });
+    box.removeEventListener("click", handlerPlayerVsPlayer, { once: true });
+  });
+};
 
-//Запускає MBBoxClick і setTimeout!!! чому??
-function showModeField() {
-  FBFieldEl.style.display = "none";
-  PCFieldEl.style.display = "none";
-  MBFieldEl.style.display = "flex";
-  modeFieldEL.style.display = "flex";
-  modeButtonEl.style.display = "none";
-  winnerBoxEl.innerText = "";
-  Array.from(FBBoxesEl).forEach((el) => (el.innerText = ""));
-  Array.from(MBBoxesEl).forEach((el) => (el.innerText = ""));
-  Array.from(PCBoxesEl).forEach((el) => (el.innerText = ""));
-  initial = "X";
-}
 
-modeButtonEl.addEventListener("click", () => {
-  showModeField();
-});
+const handlerCCClick = (event) => {
+  const availableX = getAvailableBoxes();
+  const randomXIndex = getRandomNumberTo(availableX.length - 1);
+  if (randomXIndex >= 0) {
+    const { index: randomAvailableXIndex } = availableX[randomXIndex];
+    const { row: randomXRow, column: randomXColumn } = indexToCordinates(
+      randomAvailableXIndex
+    );
+    state.value[randomXRow][randomXColumn] = "X";
+  }
+  const availableY = getAvailableBoxes();
+  const randomYIndex = getRandomNumberTo(availableY.length - 1);
+  if (randomYIndex >= 0) {
+    const { index: randomAvailableYIndex } = availableY[randomYIndex];
+    const { row: randomYRow, column: randomYColumn } = indexToCordinates(
+      randomAvailableYIndex
+    );
+    state.value[randomYRow][randomYColumn] = "O";
+  }
+  render();
+  const winner = whoWinner();
+  if (winner) {
+    winnerBoxEl.innerText = `The winner is ${winner}`;
+    return;
+  }
+  setTimeout(() => {
+    handlerCCClick();
+  }, 500);
+};
+
+function CCAddEventListeners() {
+  computerVsComputer.addEventListener("click", handlerCCClick, { once: true });
+}
+CCAddEventListeners();

@@ -79,18 +79,23 @@ const render = () => {
 
 const isComputerVsComputer = () => state.mode === "cc";
 const isPlayerVsComputer = () => state.mode === "pc";
-const isPlayerVsPlayer = () => state.mode = "pp";
+const isPlayerVsPlayer = () => (state.mode = "pp");
+
+const winnerBoxEl = document.getElementById("winner_box");
+let initial = "X";
 
 const clearAll = () => {
   state.value = [
-      [undefined, undefined, undefined],
-      [undefined, undefined, undefined],
-      [undefined, undefined, undefined],
-    ];
-    Array.from(document.querySelectorAll(".box")).forEach((box) => {
-      box.innerText = ""});
-      winnerBoxEl.innerText = "";
-}
+    [undefined, undefined, undefined],
+    [undefined, undefined, undefined],
+    [undefined, undefined, undefined],
+  ];
+  Array.from(document.querySelectorAll(".box")).forEach((box) => {
+    box.innerText = "";
+  });
+  winnerBoxEl.innerText = "";
+  initial = "X";
+};
 
 computerVsComputer.addEventListener("click", () => {
   state.mode = "cc";
@@ -109,10 +114,6 @@ playerVsPlayer.addEventListener("click", () => {
   clearAll();
 });
 
-const winnerBoxEl = document.getElementById("winner_box");
-let initial = "X";
-
-
 const handlerPlayerVsComputer = (event) => {
   const { row, column } = event.target.dataset;
   if (state.value[row][column] === undefined) {
@@ -130,6 +131,7 @@ const handlerPlayerVsComputer = (event) => {
     if (winner) {
       winnerBoxEl.innerText = `The winner is ${winner}`;
       removeListeners();
+      return;
     }
   }
 };
@@ -166,8 +168,7 @@ const removeListeners = () => {
   });
 };
 
-
-const handlerCCClick = (event) => {
+const handlerCCClick = () => {
   const availableX = getAvailableBoxes();
   const randomXIndex = getRandomNumberTo(availableX.length - 1);
   if (randomXIndex >= 0) {
@@ -198,6 +199,6 @@ const handlerCCClick = (event) => {
 };
 
 function CCAddEventListeners() {
-  computerVsComputer.addEventListener("click", handlerCCClick, { once: true });
+  computerVsComputer.addEventListener("click", handlerCCClick);
 }
 CCAddEventListeners();
